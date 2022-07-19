@@ -122,6 +122,7 @@ EOF
 systemctl enable cloudflared
 systemctl start cloudflared
 systemctl status cloudflared
+systemctl restart cloudflared
 journalctl -a -u cloudflared
 
 
