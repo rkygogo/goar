@@ -89,17 +89,17 @@ cloudflared tunnel create $name
 readp "在CF解析好的域名：" ym
 cloudflared tunnel route dns $name $ym
 
+cfuuid=$(cloudflared tunnel list | awk 'END{print $1}')
 
-
-cat <<EOF > /root/CFconfig.yml
+cat <<EOF > /root/cfconfig.yml
 tunnel: $name
-credentials-file: /root/.cloudflared/$tunnelUUID.json
+credentials-file: /root/.cloudflared/$cfuuid.json
 originRequest:
   connectTimeout: 30s
   noTLSVerify: true
 ingress:
   - hostname: $ym
-    service: $tunnelProtocol://localhost:$tunnelPort
+    service: https://localhost:443
   - service: http_status:404
 EOF
 
@@ -109,7 +109,7 @@ Description=Cloudflare Tunnel
 After=network.target
 
 [Service]
-ExecStart=cloudflared --config /root/CFconfig.yml tunnel run $name
+ExecStart=cloudflared --config /root/cfconfig.yml tunnel run $name
 Restart=always
 RestartSec=5
 StartLimitInterval=0
@@ -120,6 +120,7 @@ EOF
 
 systemctl enable cloudflared
 systemctl start cloudflared
+systemctl status cloudflared
 journalctl -a -u cloudflared
 
 
