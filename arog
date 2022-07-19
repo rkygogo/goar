@@ -71,6 +71,7 @@ systemctl disable httpd.service >/dev/null 2>&1
 service apache2 stop >/dev/null 2>&1
 systemctl disable apache2 >/dev/null 2>&1
 fi
+bit=`uname -m`
 [[ $bit = x86_64 ]] && cpu=amd64
 [[ $bit = aarch64 ]] && cpu=arm64
 
