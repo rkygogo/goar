@@ -82,7 +82,7 @@ dpkg -i cloudflared-linux-$cpu.deb
 rm cloudflared-linux-$cpu.deb
 
 
-cloudflared tunnel login | sh
+echo | cloudflared tunnel login
 
 readp "隧道名称：" name
 cloudflared tunnel create $name
