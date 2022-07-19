@@ -103,9 +103,25 @@ ingress:
   - service: http_status:404
 EOF
 
+mkdir -p /etc/systemd/system/cloudflared.service
+cat <<EOF > /etc/systemd/system/cloudflared.service
+[Unit]
+Description=Cloudflare Tunnel
+After=network.target
 
+[Service]
+ExecStart=cloudflared --config /root/CFconfig.yml tunnel run $name
+Restart=always
+RestartSec=5
+StartLimitInterval=0
 
+[Install]
+WantedBy=multi-user.target
+EOF
 
+systemctl enable cloudflared
+systemctl start cloudflared
+journalctl -a -u cloudflared
 
 
 
