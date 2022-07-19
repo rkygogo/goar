@@ -103,7 +103,6 @@ ingress:
   - service: http_status:404
 EOF
 
-mkdir -p /etc/systemd/system/cloudflared.service
 cat <<EOF > /etc/systemd/system/cloudflared.service
 [Unit]
 Description=Cloudflare Tunnel
