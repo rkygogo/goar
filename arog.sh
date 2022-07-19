@@ -118,7 +118,7 @@ StartLimitInterval=0
 [Install]
 WantedBy=multi-user.target
 EOF
-
+sysctl -w net.core.rmem_max=2500000
 systemctl enable cloudflared
 systemctl start cloudflared
 systemctl status cloudflared
